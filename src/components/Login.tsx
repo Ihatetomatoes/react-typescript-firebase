@@ -16,6 +16,8 @@ function setErrorMsg(error) {
 }
 
 export default class Login extends React.Component<LoginProps, LoginState> {
+    // add this to prevent compilation errors
+    // https://stackoverflow.com/a/43726702
     private email: HTMLInputElement;
     private pw: HTMLInputElement;
 
