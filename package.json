@@ -39,6 +39,7 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
-    "firebase": "^3.9.0"
+    "firebase": "^3.9.0",
+    "react-router-dom": "^4.1.1"
   }
 }

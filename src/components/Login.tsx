@@ -15,7 +15,10 @@ function setErrorMsg(error) {
   }
 }
 
-export default class Login extends React.Component<any, LoginState> {
+export default class Login extends React.Component<LoginProps, LoginState> {
+    private email: HTMLInputElement;
+    private pw: HTMLInputElement;
+
     constructor(props:LoginProps){
         super(props);
         this.state = {
@@ -43,12 +46,12 @@ export default class Login extends React.Component<any, LoginState> {
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="email">Email
-                            <input type="text" className="form-control" name="email" ref={(email) => {this.email = email}} placeholder="Email"/>
+                            <input type="text" className="form-control" name="email" ref={(email) => this.email = email} placeholder="Email"/>
                         </label>
                     </div>
                     <div className="form-group">
                         <label htmlFor="pw">Password
-                            <input type="password" className="form-control" name="pw" placeholder="Password" ref={(pw) => {this.pw = pw}} />
+                            <input type="password" className="form-control" name="pw" placeholder="Password" ref={(pw) => this.pw = pw} />
                         </label>
                     </div>
                     {
