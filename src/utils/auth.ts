@@ -25,3 +25,30 @@ export function saveUser (user) {
     })
     .then(() => user)
 }
+
+export function updateUser (displayName: string, photoURL: string) {
+  const user = firebaseAuth().currentUser;
+
+  user.updateProfile({
+    displayName,
+    photoURL
+  }).then(function() {
+    // Update successful.
+    console.log('Profile updated.')
+  }, function(error) {
+    // An error happened.
+    console.log('Error when updateding profile.')
+  });
+}
+
+export function updateEmail (email: string) {
+  const user = firebaseAuth().currentUser;
+
+  user.updateEmail(email).then(function() {
+    // Update successful.
+    console.log('Email updated.')
+  }, function(error) {
+    // An error happened.
+    console.log('Error when updateding user email.')
+  });
+}

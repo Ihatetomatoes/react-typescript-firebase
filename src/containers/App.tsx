@@ -4,38 +4,15 @@ import {
 } from 'react-router-dom'
 
 import { firebaseAuth } from '../utils/firebase';
-import {Home, Login, Register, Dashboard} from '../components'
+import {Home, Login, Register, Account, NavBar} from '../components'
 import { logout } from '../utils/auth'
-
-//TODO: https://github.com/tylermcginnis/react-router-firebase-auth
 
 interface AppProps {
 }
 interface AppState {
     authed: boolean;
     loading: boolean;
-}
-
-function PrivateRoute ({component: Component, authed, ...rest}) {
-  return (
-    <Route
-      {...rest}
-      render={(props) => authed === true
-        ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
-    />
-  )
-}
-
-function PublicRoute ({component: Component, authed, ...rest}) {
-  return (
-    <Route
-      {...rest}
-      render={(props) => authed === false
-        ? <Component {...props} />
-        : <Redirect to='/dashboard' />}
-    />
-  )
+    user: object;
 }
 
 export default class App extends React.Component<AppProps, AppState> {
@@ -44,7 +21,8 @@ export default class App extends React.Component<AppProps, AppState> {
 
         this.state = {
             authed: false,
-            loading: true
+            loading: true,
+            user: null
         }
     }
     componentDidMount () {
@@ -53,41 +31,48 @@ export default class App extends React.Component<AppProps, AppState> {
                 this.setState({
                     authed: true,
                     loading: false,
+                    user
                 })
             } else {
                 this.setState({
                     authed: false,
-                    loading: false
+                    loading: false,
+                    user: null
                 })
             }
         })
     }
+    logout(){
+        logout();
+    }
     render(){
+        const {authed, user} = this.state;
         return this.state.loading === true ? <h1>Loading</h1> : (
             <BrowserRouter>
                 <div>
-                    {
-                        this.state.authed
-                        ? <button
-                            style={{border: 'none', background: 'transparent'}}
-                            onClick={() => {
-                                logout()
-                            }}
-                            className="navbar-brand">Logout</button>
-                        : <span>
-                            <Link to="/login" className="navbar-brand">Login</Link>
-                            <Link to="/register" className="navbar-brand">Register</Link>
-                        </span>
-                    }
-                
-                    <Switch>
-                        <Route path='/' exact component={Home} />
-                        <PublicRoute authed={this.state.authed} path='/login' component={Login} />
-                        <PublicRoute authed={this.state.authed} path='/register' component={Register} />
-                        <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
-                        <Route render={() => <h3>No Match</h3>} />
-                    </Switch>
-
+                    <NavBar handleLogOut={() => this.logout()} authed={authed} user={user} />
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="container">
+                                <div className="col-sm-12 col-md-8" >
+                                    <Switch>
+                                        <Route path='/' exact component={Home} />
+                                        <Route path='/login' component={Login} />
+                                        <Route path='/register' component={Register} />
+                                        {
+                                            // React Router and passing props to components
+                                            //https://github.com/ReactTraining/react-router/issues/4105#issuecomment-289195202
+                                        }
+                                        <Route path='/account' render={routeProps => <Account {...routeProps} user={user}/>} />
+                                        <Route render={() => <h3>No Match</h3>} />
+                                    </Switch>
+                                </div>
+                                <div className="col-sm-12 col-md-4" >
+                                    <h2>&nbsp;</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </BrowserRouter>
         )   

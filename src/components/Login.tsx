@@ -1,5 +1,8 @@
 import * as React from 'react';
 import { login, resetPassword } from '../utils/auth'
+import {
+   Link
+} from 'react-router-dom';
 
 interface LoginProps {
     email: string;
@@ -64,7 +67,8 @@ export default class Login extends React.Component<LoginProps, LoginState> {
                                 &nbsp;{this.state.loginMessage} <a href="#" onClick={this.resetPassword} className="alert-link">Forgot Password?</a>
                             </div>
                     }
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <p><button type="submit" className="btn btn-primary">Login</button></p>
+                    <p>Don't have an account? <Link to="/register">Register</Link>.</p>
                 </form>
             </div>
         );
