@@ -6,8 +6,18 @@ const bootstrapEntryPoints = require('./webpack.bootstrap.config');
 const path = require('path');
 
 var config = {
-    app: ['./src/index.tsx'],
-    tsxLoaders: ['babel-loader','awesome-typescript-loader']
+    app: [
+        'react-hot-loader/patch',
+        // activate HMR for React
+        'webpack-dev-server/client?http://localhost:8080',
+        // bundle the client for webpack-dev-server
+        // and connect to the provided endpoint
+        'webpack/hot/only-dev-server',
+        // bundle the client for hot reloading
+        // only- means to only hot reload for successful updates
+        './src/index.tsx'
+    ],
+    tsxLoaders: ['react-hot-loader/webpack','babel-loader','awesome-typescript-loader']
 }
 
 module.exports = (env) => {
@@ -32,6 +42,7 @@ module.exports = (env) => {
         },
         devServer: {
             port: 8080,
+            hot: true,
             stats: 'errors-only',
             historyApiFallback: true
         },
@@ -69,6 +80,7 @@ module.exports = (env) => {
                 DEVELOPMENT: JSON.stringify(isDevelopment),
                 PRODUCTION: JSON.stringify(isProduction)
             }),
+            new webpack.HotModuleReplacementPlugin(), // Enable HMR
             new HtmlWebpackPlugin({
                 template: './src/index.html'
             }),
