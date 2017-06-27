@@ -32,7 +32,8 @@ module.exports = (env) => {
         },
         devServer: {
             port: 8080,
-            stats: 'errors-only'
+            stats: 'errors-only',
+            historyApiFallback: true
         },
         devtool: (() => {
             if (isProduction) return 'hidden-source-map'
