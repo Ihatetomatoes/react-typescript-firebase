@@ -2,8 +2,8 @@ import * as React from 'react';
 import {
    Link
 } from 'react-router-dom';
-import {observer, inject} from 'mobx-react';
 import {ViewStore} from '../stores'
+import {observer, inject} from 'mobx-react';
 
 interface NavBarProps {
     viewStore: ViewStore;
@@ -13,7 +13,7 @@ const NavBar = observer((props:NavBarProps) => {
     const {authed, user, logOut} = props.viewStore;
     return (
         <nav className="navbar navbar-inverse navbar-static-top">
-            <div className="container-fluid">
+            <div className="container">
                 
                 <div className="navbar-header">
                     <Link className="navbar-brand" to="/">Brand</Link>
@@ -27,6 +27,7 @@ const NavBar = observer((props:NavBarProps) => {
                         authed && <li className="dropdown">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-user" aria-hidden="true"></span>  <span className="caret"></span></a>
                             <ul className="dropdown-menu">
+                                <li><Link to="/dashboard">Dashboard</Link></li>
                                 <li><Link to="/" onClick={(e) => {
                                     logOut()
                                 }}>Logout</Link></li>
@@ -35,7 +36,7 @@ const NavBar = observer((props:NavBarProps) => {
                     }
                 </ul>
                 {
-                    user && <p className="navbar-text navbar-right">Signed in as <Link to="/account">{user.displayName ? user.displayName : 'a stranger'}</Link></p>
+                    user && <p className="navbar-text navbar-right user-info">Signed in as <Link to="/account">{user.displayName ? user.displayName : 'a stranger'}</Link></p>
                 }
             </div>
         </nav>

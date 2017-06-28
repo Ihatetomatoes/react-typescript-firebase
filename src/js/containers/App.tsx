@@ -6,6 +6,8 @@ import {withRouter} from 'react-router';
 import {observer, Provider, inject} from 'mobx-react';
 import { RouterStore } from 'mobx-react-router';
 import DevTools from 'mobx-react-devtools';
+import requireAuth from '../utils/requireAuth';
+import { ref } from '../utils/firebase';
 import {Home, Login, Register, Account, NavBar, Loader, Dashboard, UnAuthorised} from '../components'
 
 import {ViewStore} from '../stores'
@@ -17,40 +19,6 @@ interface AppState {
     viewStore: ViewStore
 }
 
-
-function requireAuth(Component) {
-    
-    interface ComponentProps {
-        viewStore: ViewStore
-    }
-    interface ComponentState {
-        viewStore: ViewStore
-    }
-
-    @inject('viewStore')@observer
-    class AuthenticatedComponent extends React.Component<ComponentProps, ComponentState> {
-
-        // componentWillMount() {
-        //     this.checkAuth();
-        // }
-
-        // checkAuth() {
-        //     if ( this.props.viewStore && !this.props.viewStore.authed) {
-        //         this.props.viewStore.routerStore.history.push(`/login`);
-        //     }
-        // }
-
-        render() {
-            return this.props.viewStore && this.props.viewStore.authed
-            ? <Component { ...this.props } />
-            : <UnAuthorised />;
-        }
-
-    }
-
-    return AuthenticatedComponent;
-}
-
 @observer
 export default class App extends React.Component<AppProps, AppState> {
     constructor(props){
@@ -60,6 +28,7 @@ export default class App extends React.Component<AppProps, AppState> {
             viewStore: this.props.viewStore
         }
     }
+
     componentDidMount () {
         const {viewStore} = this.props;
         viewStore.firebaseCheckAuth();

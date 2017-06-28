@@ -79,7 +79,7 @@ export default class Login extends React.Component<LoginProps, LoginState> {
                             </div>
                     }
                     <p><button type="submit" className="btn btn-primary">Login</button></p>
-                    <p>Don't have an account? <Link to="/register">Register</Link>.</p>
+                    {/*<p>Don't have an account? <Link to="/register">Register</Link>.</p>*/}
                 </form>
             </div>
         );

@@ -1,3 +1,13 @@
 @import './bootstrap/customizations.scss';
 @import './components/loader.scss';
 
+.navbar-inverse {
+    background-color: #24292e;
+}
+.navbar {
+    min-height: 70px;
+    padding-top: 10px;
+}
+.user-info {
+    margin-right: 10px !important;
+}

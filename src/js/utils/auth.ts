@@ -9,6 +9,11 @@ export function logout () {
   return firebaseAuth().signOut()
 }
 
+export function off () {
+  return ref.off()
+}
+
+
 export function login (email, pw) {
   return firebaseAuth().signInWithEmailAndPassword(email, pw)
 }
