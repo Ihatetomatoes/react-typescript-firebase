@@ -38,7 +38,7 @@ extractStyles: false
 # Thus, you may customize Bootstrap variables
 # based on the values established in the Bootstrap _variables.scss file
 #
-bootstrapCustomizations: ./src/bootstrap/customizations.scss
+bootstrapCustomizations: ./src/scss/bootstrap/customizations.scss
 
 
 # Import your custom styles here

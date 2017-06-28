@@ -70,7 +70,7 @@ class Account extends React.Component<AccountProps, AccountState> {
                     </div>
                     <div className="form-group">
                         <label htmlFor="photoURL">Photo URL
-                            <input type="text" value={photoURL || ''} className="form-control" name="photoURL" ref={(photoURL) => this.photoURL = photoURL} placeholder="Photo" onChange={(e) => {
+                            <input type="text" value={photoURL || ''} className="form-control" name="photoURL" ref={(photoURL) => this.photoURL = photoURL} placeholder="Photo URL" onChange={(e) => {
                                 this.handleInputUpdate(e)
                             }}/>
                         </label>

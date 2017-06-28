@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import App from './containers/App';
+import App from './js/containers/App';
 
 import './scss/app.scss';
 
@@ -15,8 +15,8 @@ ReactDOM.render(
 
 // Hot Module Replacement API
 if (module.hot) {
-  module.hot.accept("./containers/App", () => {
-    const NextApp = require<RequireImport>("./containers/App").default;
+  module.hot.accept("./js/containers/App", () => {
+    const NextApp = require<RequireImport>("./js/containers/App").default;
     ReactDOM.render(
       <AppContainer>
         <NextApp />

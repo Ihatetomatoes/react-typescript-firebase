@@ -1,0 +1,35 @@
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    .icon {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url('../images/ico_loader.svg') no-repeat 0 0;
+        background-size: 248px 248px;
+    }
+}
+.is-loading {
+    .loader {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s linear, visibility 0.3s linear;
+        z-index: 3;
+        .icon {
+            animation: spin 500ms infinite linear;
+        }
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0); transform-origin: center center; }
+    100% { transform: rotate(360deg); transform-origin: center center; }
+}
