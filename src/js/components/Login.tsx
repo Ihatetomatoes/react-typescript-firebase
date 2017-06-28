@@ -1,12 +1,16 @@
 import * as React from 'react';
-import { login, resetPassword } from '../utils/auth'
+import { login, resetPassword } from '../utils/auth';
+import {observer} from 'mobx-react';
+import {ViewStore} from '../stores'
 import {
-   Link
+   Link,
+   Redirect
 } from 'react-router-dom';
 
 interface LoginProps {
     email: string;
     pw: string;
+    viewStore: ViewStore;
 }
 interface LoginState {
     loginMessage: boolean
@@ -18,6 +22,7 @@ function setErrorMsg(error) {
   }
 }
 
+@observer
 export default class Login extends React.Component<LoginProps, LoginState> {
     // add this to prevent compilation errors
     // https://stackoverflow.com/a/43726702
@@ -45,8 +50,14 @@ export default class Login extends React.Component<LoginProps, LoginState> {
         .catch((error) => this.setState(setErrorMsg(`Email address not found.`)))
     }
     render() {
+        const {redirectToDashboard} = this.props.viewStore;
         return (
             <div>
+                {
+                    redirectToDashboard && (
+                        <Redirect to={'/dashboard'}/>
+                    )
+                }
                 <h2>Login</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { updateUser, updateEmail } from '../utils/auth';
+import { ViewStore } from '../stores'
 
 interface AccountProps {
-    user?: any
+    viewStore: ViewStore;
 }
 interface AccountState {
     email: string,
@@ -30,12 +31,12 @@ class Account extends React.Component<AccountProps, AccountState> {
     }
 
     componentDidMount(){
-        const {user} = this.props;
+        const {user} = this.props.viewStore;
         this.setState({
-            email: this.props.user.email,
-            pw: this.props.user.password,
-            displayName: this.props.user.displayName,
-            photoURL: this.props.user.photoURL
+            email: user.email,
+            pw: user.password,
+            displayName: user.displayName,
+            photoURL: user.photoURL
         })
     }
 

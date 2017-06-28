@@ -2,8 +2,15 @@ import * as React from 'react';
 import {
    Link
 } from 'react-router-dom';
+import {observer, inject} from 'mobx-react';
+import {ViewStore} from '../stores'
 
-const NavBar = ({authed, handleLogOut, user}) => {
+interface NavBarProps {
+    viewStore: ViewStore;
+}
+
+const NavBar = observer((props:NavBarProps) => {
+    const {authed, user, logOut} = props.viewStore;
     return (
         <nav className="navbar navbar-inverse navbar-static-top">
             <div className="container-fluid">
@@ -20,9 +27,9 @@ const NavBar = ({authed, handleLogOut, user}) => {
                         authed && <li className="dropdown">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-user" aria-hidden="true"></span>  <span className="caret"></span></a>
                             <ul className="dropdown-menu">
-                                <li><a href="#" onClick={() => {
-                                    handleLogOut()
-                                }}>Logout</a></li>
+                                <li><Link to="/" onClick={(e) => {
+                                    logOut()
+                                }}>Logout</Link></li>
                             </ul>
                         </li>
                     }
@@ -33,6 +40,6 @@ const NavBar = ({authed, handleLogOut, user}) => {
             </div>
         </nav>
     )
-}
+})
 
 export default NavBar;
