@@ -58,10 +58,6 @@ module.exports = (env) => {
                     use: config.tsxLoaders
                 },
                 {
-                    test: /mobx-react-devtools/,
-                    use: isDevelopment ? 'noop' : 'null'
-                },
-                {
                     test: /\.scss$/,
                     use: ExtractTextPlugin.extract({
                         fallback: "style-loader",

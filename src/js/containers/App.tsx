@@ -1,58 +1,48 @@
 import * as React from 'react';
 import {
   Route, BrowserRouter, Link, Redirect, Switch
-} from 'react-router-dom'
-
-import { firebaseAuth } from '../utils/firebase';
+} from 'react-router-dom';
+import {observer, Provider} from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
 import {Home, Login, Register, Account, NavBar, Loader} from '../components'
-import { logout } from '../utils/auth'
+
+import {ViewStore} from '../stores'
 
 interface AppProps {
+
 }
 interface AppState {
-    authed: boolean;
-    isLoading: boolean;
-    user: object;
+    viewStore: ViewStore
 }
 
+@observer
 export default class App extends React.Component<AppProps, AppState> {
     constructor(props){
         super(props);
 
+        const viewStore = new ViewStore();
+
         this.state = {
-            authed: false,
-            isLoading: true,
-            user: null
+            viewStore
         }
     }
     componentDidMount () {
-        firebaseAuth().onAuthStateChanged((user) => {
-            if (user) {
-                this.setState({
-                    authed: true,
-                    isLoading: false,
-                    user
-                })
-            } else {
-                this.setState({
-                    authed: false,
-                    isLoading: false,
-                    user: null
-                })
-            }
-        })
+        const {viewStore} = this.state;
+        viewStore.firebaseCheckAuth();
     }
-    logout(){
-        logout();
-    }
+
     render(){
-        const {authed, user, isLoading} = this.state;
+        const {viewStore} = this.state;
+        const {authed, user, isLoading} = viewStore;
         return (
             <div className={`${isLoading ? ' is-loading' : ''}`}>
                 {
+                    <DevTools />
+                }
+                {
                     isLoading ? <Loader /> : <BrowserRouter>
                         <div>
-                            <NavBar handleLogOut={() => this.logout()} authed={authed} user={user} />
+                            <NavBar handleLogOut={() => viewStore.logOut()} authed={authed} user={user} />
                             <div className="container-fluid">
                                 <div className="row">
                                     <div className="container">
