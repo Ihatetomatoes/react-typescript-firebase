@@ -6,3 +6,4 @@ export { default as NavBar } from './NavBar';
 export { default as Loader } from './Loader';
 export { default as Dashboard } from './Dashboard';
 export { default as UnAuthorised } from './UnAuthorised';
+export { default as AddTeamForm } from './AddTeamForm';

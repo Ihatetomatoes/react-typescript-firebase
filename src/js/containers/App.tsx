@@ -41,7 +41,7 @@ export default class App extends React.Component<AppProps, AppState> {
         return (
             <div className={`${isLoading ? ' is-loading' : ''}`}>
                 {
-                    <DevTools />
+                    //<DevTools />
                 }
                 {
                     isLoading ? <Loader /> : <BrowserRouter history={history} routerStore={routerStore}>

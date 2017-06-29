@@ -23,21 +23,34 @@ export default class ViewStore {
 
     }
 
+    firebaseDisconnect(){
+        ref.off();
+    }
+
     firebaseSync(){
         
-        ref.on("child_added", function(dataSnapshot) {
+        // ref.on('value', function(dataSnapshot) {
             
-            let teams = [];
+        //     let teams = [];
 
-            //this.teams.push(dataSnapshot.val());
-            dataSnapshot.forEach(function(childSnapshot) {
+        //     dataSnapshot.forEach(function(childSnapshot) {
+        //         let team = childSnapshot.val();
+        //         team['.key'] = childSnapshot.key;
+        //         teams.push(team);
+        //     });
+
+        //     this.teams = teams;
+
+        // }.bind(this));
+
+        ref.child('teams').on('value', function(snapshot) {
+            let teams = [];
+            snapshot.forEach(function(childSnapshot) {
                 let team = childSnapshot.val();
-                team['.key'] = childSnapshot.key;
+                team.key = childSnapshot.key;
                 teams.push(team);
             });
-
             this.teams = teams;
-
         }.bind(this));
 
     }
@@ -64,5 +77,18 @@ export default class ViewStore {
 
     @action logOut(){
         logout();
+    }
+
+    @action addTeam(teamID:string,teamName:string){
+        const teamsRef = ref.child('teams');
+        const newTeamKey = teamsRef.push().key;
+        ref.child('teams/'+teamID).set({ "name": teamName });
+        this.firebaseSync();
+    }
+
+    @action removeTeam(key:string){
+        const teamsRef = ref.child('teams');
+        teamsRef.child(key).remove();
+        this.firebaseSync();
     }
 }

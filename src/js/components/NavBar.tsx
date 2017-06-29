@@ -18,21 +18,18 @@ const NavBar = observer((props:NavBarProps) => {
                 <div className="navbar-header">
                     <Link className="navbar-brand" to="/">Brand</Link>
                 </div>
+                <ul className="nav navbar-nav navbar-left">
+                    {
+                        authed && <li><Link to="/dashboard">Dashboard</Link></li>
+                    }
+                </ul>
                 <ul className="nav navbar-nav navbar-right">
                     {
                         !authed && <li><Link to="/login">Sign in</Link></li>
                     }
                     
                     {
-                        authed && <li className="dropdown">
-                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span className="glyphicon glyphicon-user" aria-hidden="true"></span>  <span className="caret"></span></a>
-                            <ul className="dropdown-menu">
-                                <li><Link to="/dashboard">Dashboard</Link></li>
-                                <li><Link to="/" onClick={(e) => {
-                                    logOut()
-                                }}>Logout</Link></li>
-                            </ul>
-                        </li>
+                        authed && <li><Link to="/" onClick={(e) => { logOut() }}>Logout</Link></li>
                     }
                 </ul>
                 {
